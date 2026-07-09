@@ -1,0 +1,20 @@
+{
+  "name": "@minerva/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./schemas/*": "./schemas/*.ts",
+    "./types/*": "./types/*.ts",
+    "./constants/*": "./constants/*.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
