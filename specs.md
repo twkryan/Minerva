@@ -3,7 +3,7 @@
 ## 0. Progress Tracker (keep updated)
 
  - **Last completed milestone:** Milestone 1: Initialization & Tooling
- - **Next up:** Milestone 2: Supabase Database & Clerk Auth Setup
+ - **Next up:** Confirmar a conclusao da Milestone 2
 
  
 ## 1. Product Overview
@@ -176,13 +176,14 @@ minerva/
 - [x] Link `packages/core` as a dependency inside `apps/web`'s `package.json`.
 
 ### Milestone 2: Supabase Database & Clerk Auth Setup
-- [ ] Create a Supabase project and map the PostgreSQL connection strings to `.env` in `apps/web`.
-- [ ] Install Prisma in `apps/web` and configure `schema.prisma` using the Data Schema from Section 5.
-- [ ] Run the initial database migration (`npx prisma db push` or `migrate dev`) to Supabase.
-- [ ] Install `@clerk/nextjs` and `svix` (for webhook verification) in `apps/web`.
-- [ ] Configure `middleware.ts` using `clerkMiddleware()` to protect all `/app` routes except public SEO pages and webhooks.
-- [ ] Build the `/sign-in` and `/sign-up` routing using Clerk's pre-built components.
-- [ ] Create a webhook Route Handler (`POST /api/webhooks/clerk`) that listens for Clerk's `user.created` event, verifies the signature using `svix`, and creates a new `User` record in the Supabase database using Prisma.
+- [x] Create a Supabase project and map the PostgreSQL connection strings to `.env` in `apps/web`.
+- [x] Install Prisma in `apps/web` and configure `schema.prisma` using the Data Schema from Section 5.
+- [x] Run the initial database migration (`prisma migrate deploy`) to Supabase.
+- [x] Install `@clerk/nextjs` and `svix` (for webhook verification) in `apps/web`.
+- [x] Configure `proxy.ts` using `clerkMiddleware()` to protect all `/app` routes except public SEO pages and webhooks. (Next.js 16 replacement for `middleware.ts`.)
+- [x] Build the `/sign-in` and `/sign-up` routing using Clerk's pre-built components.
+- [x] Create a webhook Route Handler (`POST /api/webhooks/clerk`) that listens for Clerk's `user.created` event, verifies the signature using Svix through Clerk's verification helper, and creates a new `User` record in the Supabase database using Prisma.
+- [x] Enable RLS on the existing public tables and verify the Supabase security advisor.
 
 ### Milestone 3: Onboarding & Dashboard Foundation
 - [ ] Define Zod schemas in `packages/core/schemas/onboarding.ts` (target exams array, per-day availability, 0-100 difficulty ratings, study objective, distribution style).

@@ -16,3 +16,5 @@ out/
 # IDE/System files
 .vscode/
 .DS_Store
+
+tmp/

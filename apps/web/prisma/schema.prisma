@@ -1,0 +1,175 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Classification {
+  CORRECT
+  LUCKY_GUESS
+  ATTENTION_MISTAKE
+  INCORRECT
+}
+
+enum StudyObjective {
+  PASS_THE_VESTIBULAR
+  IMPROVE_GRADES
+  REVIEW_CONTENT
+}
+
+enum DistributionStyle {
+  BALANCED
+  FOCUSED
+  INTENSIVE
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+model User {
+  id                  String            @id
+  preferredName       String?
+  studyObjective      StudyObjective?
+  targetMajor         String?
+  aiDistributionStyle DistributionStyle @default(BALANCED)
+  onboardingCompleted Boolean           @default(false)
+  createdAt           DateTime          @default(now())
+
+  targetExams      UserTargetExam[]
+  availability     UserAvailability[]
+  difficulties     UserDifficulty[]
+  studyTasks       StudyTask[]
+  mockExamAttempts MockExamAttempt[]
+}
+
+model UserAvailability {
+  id        String    @id @default(cuid())
+  userId    String
+  dayOfWeek DayOfWeek
+  hours     Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dayOfWeek])
+}
+
+model UserTargetExam {
+  id     String @id @default(cuid())
+  userId String
+  examId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam Exam @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, examId])
+}
+
+model Exam {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  subjectWeights    ExamSubjectWeight[]
+  userTargetExams   UserTargetExam[]
+  questions         Question[]
+  mockExamAttempts  MockExamAttempt[]
+}
+
+model Subject {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  examWeights       ExamSubjectWeight[]
+  userDifficulties  UserDifficulty[]
+  studyTasks        StudyTask[]
+  questions         Question[]
+}
+
+model ExamSubjectWeight {
+  id               String @id @default(cuid())
+  examId           String
+  subjectId        String
+  weightMultiplier Float
+
+  exam    Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
+  subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@unique([examId, subjectId])
+}
+
+model UserDifficulty {
+  id        String @id @default(cuid())
+  userId    String
+  subjectId String
+  level     Int
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, subjectId])
+}
+
+model StudyTask {
+  id            String   @id @default(cuid())
+  userId        String
+  subjectId     String
+  title         String
+  scheduledDate DateTime @db.Date
+  isCompleted   Boolean  @default(false)
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@index([userId, scheduledDate])
+}
+
+model Question {
+  id                 String @id @default(cuid())
+  examId             String
+  subjectId          String
+  contentHtml        String
+  optionsJson        Json
+  correctOptionIndex Int
+  imageUrl           String?
+
+  exam      Exam               @relation(fields: [examId], references: [id], onDelete: Cascade)
+  subject   Subject            @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  responses QuestionResponse[]
+}
+
+model MockExamAttempt {
+  id          String    @id @default(cuid())
+  userId      String
+  examId      String
+  startedAt   DateTime
+  completedAt DateTime?
+  score       Int?
+
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam      Exam               @relation(fields: [examId], references: [id], onDelete: Cascade)
+  responses QuestionResponse[]
+}
+
+model QuestionResponse {
+  id                  String         @id @default(cuid())
+  attemptId           String
+  questionId          String
+  selectedOptionIndex Int
+  classification      Classification
+
+  attempt  MockExamAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question Question        @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId, questionId])
+}

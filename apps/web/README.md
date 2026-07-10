@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Minerva Web
 
-## Getting Started
+Next.js application for the Minerva MVP. It owns the UI, Clerk authentication,
+Prisma schema, and all server-side routes/actions.
 
-First, run the development server:
+## Local setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Install dependencies from the monorepo root:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   pnpm install
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Copy `.env.example` to `.env.local` and fill in the Supabase and Clerk
+   credentials.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Generate the Prisma Client:
 
-## Learn More
+   ```bash
+   pnpm --filter @minerva/web db:generate
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. After the Supabase project is configured, create and apply the initial
+   migration:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   pnpm --filter @minerva/web db:migrate -- --name initial_schema
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. Start the app:
 
-## Deploy on Vercel
+   ```bash
+   pnpm --filter @minerva/web dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Supabase usage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Supabase is used as the PostgreSQL database. `DATABASE_URL` is the pooled
+runtime connection string, while `DIRECT_URL` is reserved for Prisma migrations
+and administration commands. Supabase Storage will be added later for question
+images and PDFs.
+
+## Clerk webhook
+
+Configure a Clerk webhook for `user.created` pointing to
+`/api/webhooks/clerk`. The handler verifies the Svix signature and creates the
+matching `User` row using the Clerk user ID as the database primary key.
