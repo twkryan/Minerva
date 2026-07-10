@@ -2,8 +2,8 @@
 
 ## 0. Progress Tracker (keep updated)
 
- - **Last completed milestone:** Milestone 1: Initialization & Tooling
- - **Next up:** Confirmar a conclusao da Milestone 2
+ - **Last completed milestone:** Milestone 4: The Scheduling Algorithm (Core Engine)
+ - **Next up:** Milestone 5: Question Bank & Mock Exams (The Core USP)
 
  
 ## 1. Product Overview
@@ -186,18 +186,18 @@ minerva/
 - [x] Enable RLS on the existing public tables and verify the Supabase security advisor.
 
 ### Milestone 3: Onboarding & Dashboard Foundation
-- [ ] Define Zod schemas in `packages/core/schemas/onboarding.ts` (target exams array, per-day availability, 0-100 difficulty ratings, study objective, distribution style).
-- [ ] Build the multi-step Onboarding UI in `apps/web/src/app/onboarding` using React Hook Form + `shadcn/ui`.
-- [ ] Create a Server Action (`apps/web/src/actions/onboarding.ts`) to validate and save Onboarding data (`UserDifficulty`, `UserAvailability`, `UserTargetExam`, profile fields) to the DB, and set `onboardingCompleted = true`.
-- [ ] Build the basic Student Dashboard UI (`/dashboard`) showing a placeholder for today's tasks and overall profile data.
+- [x] Define Zod schemas in `packages/core/schemas/onboarding.ts` (target exams array, per-day availability, 0-100 difficulty ratings, study objective, distribution style).
+- [x] Build the multi-step Onboarding UI in `apps/web/src/app/onboarding` using React Hook Form + `shadcn/ui`.
+- [x] Create a Server Action (`apps/web/src/actions/onboarding.ts`) to validate and save Onboarding data (`UserDifficulty`, `UserAvailability`, `UserTargetExam`, profile fields) to the DB, and set `onboardingCompleted = true`.
+- [x] Build the basic Student Dashboard UI (`/dashboard`) showing a placeholder for today's tasks and overall profile data.
 
 ### Milestone 4: The Scheduling Algorithm (Core Engine)
-- [ ] Seed the DB with mock data for Exams (e.g., "ENEM"), Subjects (e.g., "Math", "History"), and ExamSubjectWeights.
-- [ ] Create a Node.js Server Action: `generateWeeklySchedule(userId)`.
-- [ ] Implement the logic: Calculate task distribution using `(UserDifficulty.level * ExamSubjectWeight.weightMultiplier)`. Distribute tasks across a 7-day period respecting each day's `UserAvailability.hours` and the user's `DistributionStyle`.
-- [ ] Save the generated schedule as `StudyTask` rows in the database.
-- [ ] Update the Dashboard UI to fetch and display `StudyTask` rows where `scheduledDate == today`.
-- [ ] Implement a checkbox interaction on the Dashboard to toggle a task's `isCompleted` status in the DB via a Server Action.
+- [x] Seed the DB with mock data for Exams (e.g., "ENEM"), Subjects (e.g., "Math", "History"), and ExamSubjectWeights.
+- [x] Create a Node.js Server Action: `generateWeeklySchedule(userId)`.
+- [x] Implement the logic: Calculate task distribution using `(UserDifficulty.level * ExamSubjectWeight.weightMultiplier)`. Distribute tasks across a 7-day period respecting each day's `UserAvailability.hours` and the user's `DistributionStyle`.
+- [x] Save the generated schedule as `StudyTask` rows in the database.
+- [x] Update the Dashboard UI to fetch and display `StudyTask` rows where `scheduledDate == today`.
+- [x] Implement a checkbox interaction on the Dashboard to toggle a task's `isCompleted` status in the DB via a Server Action.
 
 ### Milestone 5: Question Bank & Mock Exams (The Core USP)
 - [ ] Seed the DB with a small set of mock `Question` data (including JSON options and correct indices).
