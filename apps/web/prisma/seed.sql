@@ -82,4 +82,93 @@ BEGIN
   END IF;
 END $$;
 
+WITH question_seed (
+  id,
+  exam_slug,
+  subject_slug,
+  content_html,
+  options_json,
+  correct_option_index
+) AS (
+  VALUES
+    (
+      'seed_question_enem_math_1',
+      'enem',
+      'math',
+      'Quanto é 2 + 2?',
+      '["3", "4", "5", "6"]'::jsonb,
+      1
+    ),
+    (
+      'seed_question_enem_history_1',
+      'enem',
+      'history',
+      'Em que ano foi proclamada a Independência do Brasil?',
+      '["1500", "1822", "1889", "1988"]'::jsonb,
+      1
+    ),
+    (
+      'seed_question_enem_physics_1',
+      'enem',
+      'physics',
+      'Qual é a unidade de força no Sistema Internacional?',
+      '["Joule", "Watt", "Newton", "Pascal"]'::jsonb,
+      2
+    ),
+    (
+      'seed_question_fuvest_math_1',
+      'fuvest',
+      'math',
+      'Se 3x = 15, qual é o valor de x?',
+      '["3", "5", "8", "12"]'::jsonb,
+      1
+    ),
+    (
+      'seed_question_fuvest_history_1',
+      'fuvest',
+      'history',
+      'O Renascimento cultural europeu começou principalmente em qual região?',
+      '["Península Ibérica", "Itália", "Escandinávia", "Rússia"]'::jsonb,
+      1
+    ),
+    (
+      'seed_question_fuvest_physics_1',
+      'fuvest',
+      'physics',
+      'Qual grandeza resulta da divisão entre deslocamento e intervalo de tempo?',
+      '["Aceleração", "Velocidade média", "Força", "Energia"]'::jsonb,
+      1
+    )
+)
+INSERT INTO "Question" (
+  "id",
+  "examId",
+  "subjectId",
+  "contentHtml",
+  "optionsJson",
+  "correctOptionIndex"
+)
+SELECT
+  question_seed.id,
+  exam."id",
+  subject."id",
+  question_seed.content_html,
+  question_seed.options_json,
+  question_seed.correct_option_index
+FROM question_seed
+JOIN "Exam" AS exam ON exam."slug" = question_seed.exam_slug
+JOIN "Subject" AS subject ON subject."slug" = question_seed.subject_slug
+ON CONFLICT ("id")
+DO UPDATE SET
+  "contentHtml" = EXCLUDED."contentHtml",
+  "optionsJson" = EXCLUDED."optionsJson",
+  "correctOptionIndex" = EXCLUDED."correctOptionIndex";
+
+DO $$
+BEGIN
+  IF (SELECT COUNT(*) FROM "Question" WHERE "id" LIKE 'seed_question_%') < 6 THEN
+    RAISE EXCEPTION 'Seed did not establish the expected mock questions';
+  END IF;
+END $$;
+
 COMMIT;

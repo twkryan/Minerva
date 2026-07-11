@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+
+import { getSiteUrl } from "@/lib/site";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Minerva",
+  metadataBase: getSiteUrl(),
+  title: {
+    default: "Minerva",
+    template: "%s | Minerva",
+  },
   description: "Plataforma de estudos personalizada para vestibulares.",
 };
 

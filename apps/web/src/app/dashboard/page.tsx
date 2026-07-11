@@ -4,6 +4,7 @@ import {
   DISTRIBUTION_STYLE_OPTIONS,
   STUDY_OBJECTIVE_OPTIONS,
 } from "@minerva/core/constants/onboarding";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { TodayTasks } from "@/app/dashboard/_components/today-tasks";
@@ -94,9 +95,14 @@ export default async function DashboardPage() {
               Seu painel de estudo está pronto para receber a primeira agenda.
             </p>
           </div>
-          <a className={buttonVariants({ variant: "outline" })} href="/onboarding">
-            Editar preferências
-          </a>
+          <div className="flex flex-wrap gap-2">
+            <Link className={buttonVariants({ variant: "outline" })} href="/simulados">
+              Simulados
+            </Link>
+            <Link className={buttonVariants({ variant: "outline" })} href="/onboarding">
+              Editar preferências
+            </Link>
+          </div>
         </header>
 
         <div className="grid gap-4 md:grid-cols-[1.25fr_0.75fr]">

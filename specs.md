@@ -2,8 +2,8 @@
 
 ## 0. Progress Tracker (keep updated)
 
- - **Last completed milestone:** Milestone 4: The Scheduling Algorithm (Core Engine)
- - **Next up:** Milestone 5: Question Bank & Mock Exams (The Core USP)
+ - **Last completed milestone:** Milestone 6: SEO & Polish
+ - **Next up:** Confirmar a documentacao tecnica do projeto
 
  
 ## 1. Product Overview
@@ -200,18 +200,18 @@ minerva/
 - [x] Implement a checkbox interaction on the Dashboard to toggle a task's `isCompleted` status in the DB via a Server Action.
 
 ### Milestone 5: Question Bank & Mock Exams (The Core USP)
-- [ ] Seed the DB with a small set of mock `Question` data (including JSON options and correct indices).
-- [ ] Build the Question Bank UI (`/questions`): A table/list of questions filterable by Subject and Exam.
-- [ ] Build the Pre-Exam Screen (`/simulados`): Select an exam to start, creating a `MockExamAttempt` in the DB with `startedAt`.
-- [ ] Build the Timed Exam UI: Renders questions sequentially or in a grid, tracks selected options in local state, and includes a countdown timer.
-- [ ] Build the Exam Submission Server Action: Evaluates selected options against `correctOptionIndex`, calculates `score`, and saves `QuestionResponse` rows.
-- [ ] **Build the 4-Step Correction Flow UI**: Forces the user to review every answered question and select the `classification` Enum (`CORRECT`, `LUCKY_GUESS`, `ATTENTION_MISTAKE`, `INCORRECT`).
-- [ ] Build the Post-Exam Performance Report UI: Displays pie charts/stats of the 4-step classification.
+- [x] Seed the DB with a small set of mock `Question` data (including JSON options and correct indices).
+- [x] Build the Question Bank UI (`/questions`): A table/list of questions filterable by Subject and Exam.
+- [x] Build the Pre-Exam Screen (`/simulados`): Select an exam to start, creating a `MockExamAttempt` in the DB with `startedAt`.
+- [x] Build the Timed Exam UI: Renders questions sequentially or in a grid, tracks selected options in local state, and includes a countdown timer.
+- [x] Build the Exam Submission Server Action: Evaluates selected options against `correctOptionIndex`, calculates `score`, and saves `QuestionResponse` rows.
+- [x] **Build the 4-Step Correction Flow UI**: Forces the user to review every answered question and select the `classification` Enum (`CORRECT`, `LUCKY_GUESS`, `ATTENTION_MISTAKE`, `INCORRECT`).
+- [x] Build the Post-Exam Performance Report UI: Displays pie charts/stats of the 4-step classification.
 
 ### Milestone 6: SEO & Polish
-- [ ] Create programmatic Server Components for SEO: `/vestibulares/[examSlug]` and `/materias/[subjectSlug]`.
-- [ ] Implement Next.js `generateMetadata` for dynamic page titles and descriptions based on the database (e.g., "Study for ENEM: Weights and Questions").
-- [ ] Inject valid Schema.org `JSON-LD` (`EducationalApplication`, `FAQPage`) into the `<head>` of public programmatic pages.
-- [ ] Final UI Polish: Ensure responsive design works flawlessly on mobile viewports for the Dashboard and Exam interfaces.
-- [ ] Perform a full end-to-end test of the user journey (Sign up → Onboard → Generate Schedule → Complete Task → Take Mock Exam → Classify Mistakes).
+- [x] Create programmatic Server Components for SEO: `/vestibulares/[examSlug]` and `/materias/[subjectSlug]`.
+- [x] Implement Next.js `generateMetadata` for dynamic page titles and descriptions based on the database (e.g., "Study for ENEM: Weights and Questions").
+- [x] Inject valid Schema.org `JSON-LD` (`EducationalApplication`, `FAQPage`) into the `<head>` of public programmatic pages.
+- [x] Final UI Polish: Ensure responsive design works flawlessly on mobile viewports for the Dashboard and Exam interfaces.
+- [x] Perform a full end-to-end test of the user journey (Sign up → Onboard → Generate Schedule → Complete Task → Take Mock Exam → Classify Mistakes).
 ```

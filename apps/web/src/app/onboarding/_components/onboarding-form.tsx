@@ -11,7 +11,7 @@ import {
 } from "@minerva/core/schemas/onboarding";
 import { Check, ChevronLeft, ChevronRight, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { type FormEvent, useState, useTransition } from "react";
+import { type FormEvent, type MouseEvent, useState, useTransition } from "react";
 import { type FieldPath, useForm, useWatch } from "react-hook-form";
 
 import { saveOnboarding } from "@/actions/onboarding";
@@ -122,7 +122,9 @@ export function OnboardingForm({
     return !hasError;
   }
 
-  function goToNextStep() {
+  function goToNextStep(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+
     const isValid = validateFields(STEP_FIELDS[step]);
 
     if (isValid) {

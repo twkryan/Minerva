@@ -9,7 +9,7 @@ export default function SignUpPage() {
 
   return (
     <main className="grid min-h-screen place-items-center bg-background px-6 py-12">
-      <SignUp fallbackRedirectUrl="/app" signInUrl="/sign-in" />
+      <SignUp fallbackRedirectUrl="/dashboard" signInUrl="/sign-in" />
     </main>
   );
 }
